@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Open Up</title>
+
+		<meta name="description" content="Open Up : Lesson 1 DHCP servers">
+		<meta name="author" content="Tellier Benoit">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+	
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+	<section>
+<h1>Open-up</h1>
+
+<h2>System administration</h2>
+
+<img data-src="large.png">
+
+<p>Speaker : <a>Benoit Tellier</a></p>
+
+<p>
+Retrieve this presentation online : <a></a><br/>
+And on <a href="">GitHub</a>
+</p>
+</section>
+
+
+
+
+
+
+
+
+
+<section>
+<h2>Why this presentation ?</h2>
+
+<ul>
+<li>Who am I ?</li>
+<li>Who you are !</li>
+<li>Objectives of this semester</li>
+<li>Open Source DHCP server</li>
+</ul>
+</section>
+
+
+
+
+
+
+
+
+<section>
+<section>
+<h1>Who am I ?</h1>
+</section>
+
+<section>
+<h2>Me</h2>
+<p>
+<div class="fragment"><b><a>Age</a></b> : 24<br/></div>
+<div class="fragment"><b><a>From</a></b> : Paris, France<br/></div>
+<div class="fragment"><b><a>Job</a></b> : Distributed application programmer <br/></div>
+<div class="fragment"><b><a>Spoken languages</a></b> : French, English, (~German)<br/></div>
+<div class="fragment"><ul><b><a>Hobbies</a></b> :
+<li>Climbing</li>
+<li>Play board games</li>
+<li>Coding</li>
+<li>Etc...</li>
+</ul></div>
+<div class="fragment"><b><a>Prefered web site</a></b> : <a href="http://highscalability.com/">highscalability.com/</a></div>
+</p>
+</section>
+
+<section>
+<h2>System administrator at MiNET</h2>
+<img data-src="index.jpe"><!-- Logo MiNET -->
+<p class="fragment">ISP for ~700 student</p>
+<p class="fragment">Relying on Free technology</p>
+<p class="fragment">Infrastructure and system administration</p>
+</section>
+
+<section>
+<h2>MiNET's network</h2>
+<img data-src="weathermap.png"><!-- Weather map -->
+</section>
+
+<section>
+<h2>What I did at MiNET</h2>
+<ul>
+<li class="fragment">Administrative work</li>
+<li class="fragment">Storage for virtual machine disks with <b>ZFS</b></li>
+<li class="fragment">OpenStack infrastructure deployment</li>
+<li class="fragment">Monitoring improvement with <b>Zabbix</b></li>
+<li class="fragment">Design hosting system for users website</li>
+<li class="fragment">Supervise FireWall upgrade</li>
+<li class="fragment">Etc...</li>
+</ul>
+</section>
+
+<section>
+<h2>Cyrus' problem</h2>
+<p class="fragment">A hard to understand code</p>
+<span class="fragment">
+<img data-src="cyrus_sharding.png"><br/>
+<img data-src="cyrus_replica.png">
+<p class="fragment">Sharding, passive replication</p>
+</span>
+<p class="fragment">Maildir</p>
+</section>
+
+<section>
+<h2>James</h2>
+<p>Free Mail server from the Apache Foundation<br/>
+<img data-src="james-logo.gif"></p>
+<p class="fragment">Mail server chosen for OpenPaas</p>
+<p class="fragment">Committer for ~ 1 year</p>
+</section>
+
+<section>
+<h2>JAMES internals</h2>
+<span class="fragment">
+<img data-src="internal.png">
+</span>
+</section>
+
+<section>
+<h2>James distributed architecture</h2>
+<img data-src="infra.png">
+</section>
+
+<section>
+<h2>James Buzz Worlds</h2>
+<ul>
+<li class="fragment">Agile, SCRUM, CI (git, github, jenkins, docker)</li>
+<li class="fragment">Java 8</li>
+<li class="fragment">Cassandra, ElasticSearch, Kafka</li>
+</ul>
+</section>
+</section>
+
+
+
+
+
+
+
+
+
+<section>
+<section>
+<h1>About you !</h1>
+</section>
+
+<section>
+<h2>Professional project</h2>
+<ul>
+<li class="fragment">Who wants to be a developer ?</li>
+<li class="fragment">Who wants to be a DevOps ?</li>
+<li class="fragment">Who wants to be a SysAdmin ?</li>
+<li class="fragment">Who have other projects ?</li>
+</ul>
+</section>
+
+<section>
+<h2>About you (again)</h2>
+<ul>
+<li class="fragment">Who already deployed stuff on a server ?</li>
+<li class="fragment">Who already deployed stuff on an OpenSource server ?</li>
+<li class="fragment">Who already had real users ?</li>
+<li class="fragment">Who created and administrate his own website ?</li>
+<li class="fragment">Who already handled infrastructure projects ?</li>
+<li class="fragment">Who already used a Cloud ? Which one ?</li>
+</ul>
+</section>
+
+<section>
+<h2>About you (again)</h2>
+<ul>
+<li class="fragment">Do you have a Github account ?</li>
+<li class="fragment">Who already contributed to OpenSource projects ?</li>
+<li class="fragment">Do you write tests ?</li>
+<li class="fragment">Do you use ever used a CI tool ?</li>
+<li class="fragment">Do you ever practiced agile development ?</li>
+</ul>
+</section>
+
+
+<section>
+<h2>Hall of Fame !</h2>
+</section>
+
+<section>
+<h2>Expectations...</h2>
+</section>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<section>
+<section>
+<h1>The upcoming semester</h1>
+</section>
+
+<section>
+<b>By the end of the lessons you should be able to :</b>
+<ul>
+<li class="fragment">Master IT infrastructure</li>
+<li class="fragment">Configure services for local networks</li>
+<li class="fragment">Have knowledge about Server Roles and Installation of servers</li>
+<li class="fragment">Server Maintenance</li>
+<li class="fragment">Performance Management</li>
+<li class="fragment">Monitoring and alerting services</li>
+</ul>
+</section>
+
+<section>
+<h2>Why System administration matters</h2>
+<ul>
+<li class="fragment">System administrator</li>
+<li class="fragment">Collegues</li>
+<li class="fragment">Understand your "users"</li>
+<li class="fragment">Better knowledge of infrastructure</li>
+</ul>
+</section>
+
+<section>
+<h2>Time management</h2>
+<ul>
+<li>Lecture: 13 hours</li>
+<li>Mini-project: 40 hours</li>
+<li>Practice: 26 hours</li>
+<li>Exams : 6 hours</li>
+</ul>
+</section>
+
+<section>
+<ul>
+  <li class="fragment">DHCP server</li>
+  <li class="fragment">DNS server</li>
+  <li class="fragment">LDAP</li>
+  <li class="fragment">CIFS</li>
+  <li class="fragment">Docker and a simple website</li>
+  <li class="fragment">Advanced web architecture</li>
+  <li class="fragment">Exam</li>
+  <li class="fragment">Mail servers</li>
+  <li class="fragment">Advanced mail architecture</li>
+  <li class="fragment">Monitoring</li>
+  <li class="fragment">Logs management</li>
+  <li class="fragment">High Availability</li>
+  <li class="fragment">Configuration management threw Git</li>
+  <li class="fragment">OpenSouce organisations and history</li>
+</ul>
+</section>
+
+<section>
+<h2>Evaluating your work</h2>
+<ul>
+<li>Class attendance  25%</li>
+<li>Mid-term exam 25%</li>
+<li>Final exam 50%</li>
+</ul>
+</section>
+
+<section>
+<h2>Project list</h2>
+<ul>
+<li class="fragment">Unattended installation</li>
+<li class="fragment">Server supervision</li>
+<li class="fragment">OBM</li>
+<li class="fragment">Migration scripts from Zimbra to OBM</li>
+<li class="fragment">Vtiger CRM + LDAP authentication</li>
+<li class="fragment">Mail server (Cyrus)</li>
+<li class="fragment">Mail server (James)</li>
+<li class="fragment">Active Directory Server</li>
+</ul>
+</section>
+
+<section>
+<h2>Project planning</h2>
+<p>
+<table>
+						<thead>
+							<tr>
+								<th>Event</th>
+								<th>Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Course presentation</td>
+								<td>19/02</td>
+							</tr>
+							<tr>
+								<td>Final project list</td>
+								<td>04/03</td>
+							</tr>
+							<tr>
+								<td>Resuts return</td>
+								<td>20/05</td>
+							</tr>
+							<tr>
+								<td>Project presentation</td>
+								<td>27/05</td>
+							</tr>
+						</tbody>
+					</table>
+</section>
+</section>
+
+
+
+
+
+
+
+
+<section>
+<h1>DHCPD</h1>
+</section>
+
+
+<section>
+<section>
+<h2>DHCP protocol</h2>
+<ul>
+<li>Obtain network parameters</li>
+<li>BOOTP extension (Bootstrap Protocol)</li>
+</ul>
+<p>More info on <a href="http://www.wikiwand.com/en/Dynamic_Host_Configuration_Protocol">DHCP</a> and <a href="http://www.wikiwand.com/en/Bootstrap_Protocol">BOOTP</a>
+</section>
+
+<section>
+<h2>DHCP protocol</h2>
+<br/>
+<img data-src="dhcp1.png">
+</section>
+
+<section>
+<h2>DHCP protocol</h2>
+<br/>
+<img data-src="dhcp2.png">
+</section>
+
+<section>
+<h2>DHCP protocol</h2>
+<br/>
+<img data-src="dhcp3.png">
+</section>
+
+<section>
+<h2>DHCP protocol</h2>
+<br/>
+<img data-src="dhcp4.png">
+</section>
+</section>
+
+<section>
+<section>
+<h2>A DHCP server</h2>
+<br/>
+<p><b>ISC DHCP</b> is the reference</p>
+<br/><br/>
+<p>More information on <a href="http://www.isc.org/software/dhcp">ISC website</a> and on <a href="http://en.wikipedia.org/wiki/Dhcpd">Wikipedia</a></p>
+</section>
+
+<section>
+<h2>Installation (Debian)</h2>
+<br/>
+<p>Paquet isc-dhcp-server on Debian and Ubuntu :</p>
+<pre><code># apt-get install isc-dhcp-server</code></pre>
+<p>/etc/init.d/dhcpd stop/start/restart<p>
+<br/>
+<p>Command name : <b>dhcpd</b></p>
+</section>
+
+<section>
+<h2>Installation (Debian)</h2>
+<br/>
+<p>Paquet dhcp on CentOS and Fedora :</p>
+<pre><code>
+# yum install dhcp</code></pre>
+<p>Then<p/>
+<pre><code># /etc/init.d/dhcpd start
+# chkconfig dhcpd on</code></pre>
+</section>
+
+<section>
+<h2>Configuration</h2>
+<p>File : <b>/etc/dhcp/dhcpd.conf</b></p>
+</section>
+
+<section>
+<h2>Configuration</h2>
+<pre>
+<code># man dhcpd.conf
+
+authoritative ;
+ddns-update-style none ;
+default-lease-time 259200 ;
+# 3 jours
+log-facility local3 ;
+max-lease-time 604800 ;
+# 1 semaine
+server-identifier dhcp.example.com ;
+use-host-decl-names on ;</code>
+</pre>
+</section>
+
+<section>
+<h2>Configuration</h2>
+<pre>
+<code># man dhcp-options
+
+domain-name "example.com" ;
+domain-name-servers ns0.example.com , ns1.example.com ;
+lpr-servers lpr.example.com ;
+nntp-server news.example.com ;
+ntp-servers ntp.example.com ;
+pop-server mail.example.com ;
+smtp-server mail.example.com ;
+subnet-mask 255.255.255.0 ;
+www-server www.example.com ;</code>
+</pre>
+</section>
+
+<section>
+<h2>Configuration : dynamic</h2>
+<pre>
+<code>subnet 198.51.100.0 netmask 255.255.255.0
+{
+    option routers 198.51.100.1 ;
+    option broadcast-address 198.51.100.255 ;
+
+    pool
+    {
+        range 198.51.100.2 198.51.100.254 ;
+        default-lease-time 3600 ;
+        max-lease-time 3600 ;
+    }
+}</code>
+</pre>
+</section>
+
+<section>
+<h2>Configuration : static</h2>
+<pre>
+<code>group
+{
+    option domain-name "example.com" ;
+
+    host test1.example.com
+    {
+        option host-name "test1.example.com" ;
+        fixed-address test1.example.com ;
+        hardware ethernet 00:60:08:0e:71:8f ;
+    }
+}</code>
+</pre>
+</section>
+</section>
+
+
+<section>
+<section>
+<h1>DHCP at MiNET</h1>
+</section>
+
+<section>
+<h2>Needs</h2>
+<ul>
+<li class="fragment">Traceability</li>
+<li class="fragment">Reflect subsciption</li>
+<li class="fragment">Central, easy edition</li>
+</ul>
+</section>
+
+<section>
+<h2>What we did?</h2>
+<br/>
+<p class="fragment">Modify DHCPD to use REST calls upon <b>DHCP REQUEST</b></p>
+<p class="fragment">Let us handle business logic in our adherent management application</p>
+<p class="fragment">Very little code in DHCPD !</p>
+</section>
+
+<section>
+<h2>Cons</h2>
+<ul>
+<li class="fragment">Apply the patch on future release</li>
+<li class="fragment">Introduce buggs in our DHCP server ?</li>
+</ul>
+</section>
+
+<section>
+<h2>Security</h2>
+<br/>
+<ul>
+<li>Switchs deny DHCP servers for clients</li>
+<li>RADIUS authentication</li>
+<li>Arpwatch is watching !</li>
+</ul>
+</section>
+
+<section>
+<h2>Acknowledgments</h2>
+<p>Patch by <a>Guillaume Rose</a></p>
+<p>On <a href="https://github.com/guillaumerose/dhcp-http-json">Github</a>
+</section>
+
+<section>
+<h2>Why this example ?</h2>
+<br/>
+<p>Highlights how Open Source allows one to reach his goals</p>
+<p class="fragment">Nothing paid, just skills</p>
+</section>
+
+</section>
+
+<section>
+	<h1>Questions ?</h1>
+</section>
+
+
+
+
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				slideNumber: true,
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+                                
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
