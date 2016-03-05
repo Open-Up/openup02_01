@@ -1,4 +1,4 @@
-# OpenUp lesson 2
+# OpenUp lesson 1
 
 ## Course presentation + DHCP
 
